@@ -1,0 +1,27 @@
+/* 全站字體小型化 */
+html, body {
+  font-size: 12px !important;
+  font-family: "PMingLiU","MingLiU","SimSun","Times New Roman",serif !important;
+  line-height: 1.6;
+}
+
+/* 所有標題縮小 */
+h1,h2,h3,h4,h5,h6 {
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+
+/* 列表頁標題縮小 */
+.page-title {
+  font-size: 12px !important;
+}
+
+/* 單篇作品頁原主題大標題完全隱藏 */
+.post-title {
+  display: none !important;
+}
+
+/* 首頁隱藏 PaperMod 的主選單 */
+.home .header-nav {
+  display: none !important;
+}

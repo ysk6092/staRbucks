@@ -1,0 +1,43 @@
+{{ define "main" }}
+<style>
+  .fullscreen-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/images/home/hero.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .hero-name {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    font-size: 16px;
+  }
+  .fullscreen-menu {
+    position: fixed;
+    top: 30%;
+    left: 10%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+</style>
+
+<div class="fullscreen-bg"></div>
+
+<div class="hero-name">
+  Chang,Jui-Che / 張瑞哲
+</div>
+
+<div class="fullscreen-menu">
+  <a href="/works/">works</a>
+  <a href="/about/">about</a>
+  <a href="/cv/">cv</a>
+  <a href="/contact/">contact</a>
+</div>
+{{ end }}

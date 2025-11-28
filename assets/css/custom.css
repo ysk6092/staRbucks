@@ -1,0 +1,65 @@
+
+/* 全站預設字體：細明體 + 12px */
+html, body {
+  font-size: 12px;
+  font-family: "PMingLiU", "MingLiU", "SimSun", "Times New Roman", serif;
+  line-height: 1.6;
+}
+
+/* 所有標題維持小字，避免巨大 */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* 頂部主選單稍微大一點點 */
+.header .menu a {
+  font-size: 14px;
+}
+
+/* 首頁隱藏右上角主選單：body.class=list */
+body.list .header .menu {
+  display: none !important;
+}
+
+/* 首頁 hero menu 字體稍微大、白色 */
+.fullscreen-menu {
+  font-size: 16px;
+}
+
+.fullscreen-menu a {
+  font-size: 1em;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+}
+
+/* 作品頁圖片最大寬度 100% */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* TOP 按鈕 */
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(255,255,255,0.8);
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  border: 1px solid #aaa;
+  z-index: 999;
+  display: none;
+}
+
+#back-to-top.show {
+  display: block;
+}
+
+#back-to-top:hover {
+  background: #ffffff;
+}

@@ -1,0 +1,1 @@
+Put images for bookmark-all-pages here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/bookmark-all-pages/01.jpg in Markdown.

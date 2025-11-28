@@ -1,0 +1,24 @@
+[[main]]
+  name = "works"
+  url = "/works/"
+  weight = 1
+
+[[main]]
+  name = "works (img)"
+  url = "/works-img/"
+  weight = 2
+
+[[main]]
+  name = "about"
+  url = "/about/"
+  weight = 3
+
+[[main]]
+  name = "cv"
+  url = "/cv/"
+  weight = 4
+
+[[main]]
+  name = "contact"
+  url = "/contact/"
+  weight = 5

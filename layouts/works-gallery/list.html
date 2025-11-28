@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="works-grid">
+  {{ range sort (where .Site.RegularPages "Type" "works") "Params.year" "desc" }}
+    <a class="work-card" href="{{ .RelPermalink }}">
+      {{ with .Params.thumb }}
+        <img src="{{ . }}" alt="{{ .Title }}">
+      {{ end }}
+      <div class="work-title">{{ .Title }}</div>
+    </a>
+  {{ end }}
+</div>
+{{ end }}

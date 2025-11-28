@@ -1,0 +1,1 @@
+Put images for stair here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/stair/01.jpg in Markdown.

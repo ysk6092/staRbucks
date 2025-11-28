@@ -1,0 +1,1 @@
+Put images for cant-go here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/cant-go/01.jpg in Markdown.

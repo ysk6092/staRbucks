@@ -1,72 +1,104 @@
 {{ define "main" }}
+
 <style>
-  /* 只在首頁生效：把主題的 header/導覽整排藏掉 */
-  header.header, .header, .nav, .menu, .logo {
-    display: none !important;
-  }
+/* =========================
+   HOME ONLY – 清空主題干擾
+   ========================= */
+body.home header,
+body.home .header,
+body.home .nav,
+body.home .menu,
+body.home .logo,
+body.home .site-title {
+  display: none !important;
+}
 
-  /* 首頁也不要 TOP */
-  #back-to-top { display: none !important; }
+/* 首頁不要 TOP */
+body.home #back-to-top{
+  display: none !important;
+}
 
-  /* ✅ 讓主題內容層不要蓋住背景 */
-  body, .main, main, .page, .post, .container, .wrapper {
-    background: transparent !important;
-  }
+/* 不讓主題背景蓋住 */
+body.home,
+body.home main,
+body.home .main,
+body.home .container,
+body.home .wrapper{
+  background: transparent !important;
+}
 
-  /* ✅ 背景層一定要在最底（負的 z-index） */
-  .home-stage{
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: -10;     /* <--- 關鍵 */
-    pointer-events: none;
-  }
+/* =========================
+   HOME 背景結構
+   ========================= */
 
-  .home-bg-cover{
-    position: absolute;
-    inset: 0;
-    background-image: url("{{ "images/home/hero.jpg" | relURL }}");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
+/* 最底層舞台 */
+.home-stage{
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
 
-  .home-bg-hero{
-    position: absolute;
-    inset: 0;
-    background-image: url("{{ "images/home/hero.jpg" | relURL }}");
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
+/* 滿版 cover（會隨視窗填滿） */
+.home-bg-cover{
+  position: absolute;
+  inset: 0;
+  background-image: url('{{ "images/home/hero.jpg" | relURL }}');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 
-  /* 首頁選單要在最上面 */
-  .home-menu{
-    position: fixed;
-    top: 30%;
-    left: 10%;
-    display: flex;
-    gap: 24px;
-    z-index: 10;
-  }
-  .home-menu a{
-    color: #000;
-    text-decoration: none;
-  }
-  .home-menu a:hover,
-  .home-menu a:focus,
-  .home-menu a:active{
-    color: red !important;
-  }
+/* 小張 hero 疊在上面（固定比例） */
+.home-hero-small{
+  position: fixed;
+  z-index: 1;
+  left: 40px;
+  top: 40px;
+  width: min(560px, 42vw);
+  height: auto;
+  box-shadow: 0 16px 40px rgba(0,0,0,.25);
+}
+
+/* =========================
+   首頁選單
+   ========================= */
+.home-menu{
+  position: fixed;
+  top: 30%;
+  left: 10%;
+  display: flex;
+  gap: 24px;
+  z-index: 2;
+}
+
+.home-menu a{
+  color: #000;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.home-menu a:hover,
+.home-menu a:focus,
+.home-menu a:active{
+  color: red !important;
+}
 </style>
 
+<!-- 背景層 -->
 <div class="home-stage">
- <div class="home-bg-cover" style="background-image:url('{{ "images/home/hero.jpg" | absURL }}');"></div>
-
-
-  <div class="home-bg-hero"></div>
+  <div class="home-bg-cover"></div>
 </div>
 
+<!-- 疊在上面的小圖（用 img，最穩） -->
+<img
+  class="home-hero-small"
+  src="{{ "images/home/hero.jpg" | relURL }}"
+  alt="hero"
+/>
+
+<!-- 首頁選單 -->
 <nav class="home-menu">
   <a href="{{ "works/" | relURL }}">works</a>
   <a href="{{ "works-img/" | relURL }}">works (img)</a>
@@ -74,4 +106,5 @@
   <a href="{{ "cv/" | relURL }}">cv</a>
   <a href="{{ "contact/" | relURL }}">contact</a>
 </nav>
+
 {{ end }}

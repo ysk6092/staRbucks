@@ -1,12 +1,18 @@
-baseURL = "/"
+baseURL = "https://ysk6092.github.io/my-artist-site/"
 languageCode = "zh-tw"
 title = "Chang,Jui-Che"
 theme = "papermod"
 
+canonifyURLs = true
+relativeURLs = false
+
 [pagination]
-  pagerSize = 20
+pagerSize = 20
 
 [params]
+env = "production"
+description = "Artist Portfolio"
+customCSS = ["css/custom.css"]
 
   hidden = true
   hiddenInSingle = true

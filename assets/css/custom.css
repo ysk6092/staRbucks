@@ -209,7 +209,7 @@ body:not(.home) a:focus{
 }
 /* Home hero background (forced) */
 body.home {
-  background-image: url("/images/home/hero.jpg");
+  background-image: url("../images/home/hero.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

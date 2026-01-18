@@ -453,3 +453,59 @@ body.dark .header a {
 body:not(.dark) .menu a { color: #000 !important; }
 body.dark .menu a { color: #fff !important; }
 .menu a:hover, .menu a:focus, .menu a:active { color: #ff0000 !important; }
+/* ===== Nav color: follow theme (light=black, dark=white), hover always red ===== */
+
+/* 先把所有狀態統一：link / visited */
+.header .nav a,
+.header .nav a:visited,
+.header .logo a,
+.header .logo a:visited,
+.menu a,
+.menu a:visited {
+  color: #000 !important;   /* 預設：亮色黑字 */
+}
+
+/* 深色模式：支援多種判斷方式（PaperMod 可能用其中一種） */
+html.dark .header .nav a,
+html.dark .header .nav a:visited,
+html.dark .header .logo a,
+html.dark .header .logo a:visited,
+html.dark .menu a,
+html.dark .menu a:visited,
+body.dark .header .nav a,
+body.dark .header .nav a:visited,
+body.dark .header .logo a,
+body.dark .header .logo a:visited,
+body.dark .menu a,
+body.dark .menu a:visited,
+html[data-theme="dark"] .header .nav a,
+html[data-theme="dark"] .header .nav a:visited,
+html[data-theme="dark"] .header .logo a,
+html[data-theme="dark"] .header .logo a:visited,
+html[data-theme="dark"] .menu a,
+html[data-theme="dark"] .menu a:visited,
+body[data-theme="dark"] .header .nav a,
+body[data-theme="dark"] .header .nav a:visited,
+body[data-theme="dark"] .header .logo a,
+body[data-theme="dark"] .header .logo a:visited,
+body[data-theme="dark"] .menu a,
+body[data-theme="dark"] .menu a:visited {
+  color: #fff !important;   /* 深色白字 */
+}
+
+/* hover / focus / active 永遠紅色（一樣把 visited 也鎖住） */
+.header .nav a:hover,
+.header .nav a:focus,
+.header .nav a:active,
+.header .nav a:visited:hover,
+.header .logo a:hover,
+.header .logo a:focus,
+.header .logo a:active,
+.header .logo a:visited:hover,
+.menu a:hover,
+.menu a:focus,
+.menu a:active,
+.menu a:visited:hover {
+  color: #ff0000 !important;
+}
+

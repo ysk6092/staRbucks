@@ -508,4 +508,23 @@ body[data-theme="dark"] .menu a:visited {
 .menu a:visited:hover {
   color: #ff0000 !important;
 }
+/* ===== Home: add an extra full-bleed cover image UNDER your existing hero ===== */
+.home-bg-cover{
+  position: fixed;       /* 跟著視窗 */
+  inset: 0;
+  z-index: 0;            /* 最底層 */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover; /* 這就是「填滿整個畫面」 */
+}
 
+/* 讓你原本的 hero 圖層與文字都在上面 */
+.home-bg,
+.hero-name,
+main,
+.header {
+  position: relative;
+  z-index: 1;
+}
+
+/* 如果你的首頁本來就把 header 隱藏了，這不會影響 */

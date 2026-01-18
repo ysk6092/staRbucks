@@ -207,3 +207,10 @@ body:not(.home) a:focus{
 .work-single .post-content figure {
   display: none !important;
 }
+/* Home hero background (forced) */
+body.home {
+  background-image: url("/images/home/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -410,3 +410,10 @@ header.header .menu a:active {
   filter: invert(1);
   transform: scale(1.05);
 }
+/* Home hero background (forced) */
+body.home {
+  background-image: url("/images/home/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

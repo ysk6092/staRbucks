@@ -1,0 +1,37 @@
+{{ define "main" }}
+<main class="post work-single">
+
+  {{/* ===== 圓環（上方） ===== */}}
+  {{ $imgs := .Resources.ByType "image" }}
+  {{ if gt (len $imgs) 0 }}
+  <section class="work-ring-wrap">
+    <div class="work-ring" data-autospin="1">
+      {{ range $imgs }}
+      <div class="work-ring-item">
+        <div class="frame169">
+          <img src="{{ .RelPermalink }}" alt="{{ $.Title }}">
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* ===== 文字內容（只有文字） ===== */}}
+  <article class="post-content">
+    {{ .Content }}
+  </article>
+
+  {{/* ===== 文字下方：完整作品圖（原本 md 的那些） ===== */}}
+  {{ if gt (len $imgs) 0 }}
+  <section class="work-images-below">
+    {{ range $imgs }}
+      <div class="work-image">
+        <img src="{{ .RelPermalink }}" alt="{{ $.Title }}">
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+</main>
+{{ end }}

@@ -93,9 +93,16 @@
   </div>
   {{- end }}
   {{- if not (.Param "hideMeta") }}
-  <footer class="entry-footer">
-    {{- partial "post_meta.html" . -}}
-  </footer>
+<footer class="entry-footer">
+  {{- if $page.Params.year -}}
+    <span>{{ $page.Params.year }}</span>
+  {{- else -}}
+    {{- with $page.Params.date -}}
+      {{- $s := printf "%v" . -}}
+      {{- if ge (len $s) 4 -}}<span>{{ substr $s 0 4 }}</span>{{- end -}}
+    {{- end -}}
+  {{- end -}}
+</footer>
   {{- end }}
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>

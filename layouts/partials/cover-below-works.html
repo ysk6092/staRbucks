@@ -1,0 +1,18 @@
+{{/* 
+  這個 partial 只做一件事：
+  在 works 的 single 頁面「文字下方」再顯示一張 cover（縮圖/封面）
+  若你沒有設定 cover，就什麼也不顯示。
+*/}}
+
+{{- $p := . -}}
+
+{{- $cover := $p.Param "thumb" -}}
+{{- if not $cover -}}
+  {{- $cover = $p.Param "cover.image" -}}
+{{- end -}}
+
+{{- if $cover -}}
+  <div class="work-cover-below">
+    <img src="{{ $cover | relURL }}" alt="{{ $p.Title }}" style="max-width:100%;height:auto;">
+  </div>
+{{- end -}}

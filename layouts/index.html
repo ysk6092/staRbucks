@@ -1,5 +1,10 @@
 {{ define "main" }}
 <style>
+/* force home menu hover red */
+a:hover, a:focus { color: red !important; }
+</style>
+
+<style>
   .fullscreen-bg {
     position: fixed;
     top: 0;
@@ -31,13 +36,18 @@
 <div class="fullscreen-bg"></div>
 
 <div class="hero-name">
-  Chang,Jui-Che / 張瑞哲
+  
+</div>
+
+<div class="home-bg" style="background-image:url('{{ "images/home/hero.jpg" | relURL }}');">
+  <!-- 你的左側選單/內容 -->
 </div>
 
 <div class="fullscreen-menu">
-  <a href="/works/">works</a>
-  <a href="/about/">about</a>
-  <a href="/cv/">cv</a>
-  <a href="/contact/">contact</a>
+  <a href="{{ "works/" | relURL }}">works</a>
+<a href="{{ "works-img/" | relURL }}">works (img)</a>
+<a href="{{ "about/" | relURL }}">about</a>
+<a href="{{ "cv/" | relURL }}">cv</a>
+<a href="{{ "contact/" | relURL }}">contact</a>
 </div>
 {{ end }}

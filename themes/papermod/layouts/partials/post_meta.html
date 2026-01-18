@@ -1,7 +1,22 @@
+<!-- META_TEST -->
 {{- $scratch := newScratch }}
 
-{{- if not .Date.IsZero -}}
-{{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
+{{/* === YEAR / DATE LOGIC (supports date as "YYYY" or full date) === */}}
+{{- if .Params.year -}}
+  {{- $scratch.Add "meta" (slice (printf "<span>%v</span>" .Params.year)) }}
+{{- else -}}
+  {{- $raw := .Param "date" -}}
+  {{- if not $raw -}}{{- $raw = .Param "publishDate" -}}{{- end -}}
+  {{- if not $raw -}}{{- $raw = .Param "lastmod" -}}{{- end -}}
+
+  {{- if $raw -}}
+    {{- $s := printf "%v" $raw -}}
+    {{- if ge (len $s) 4 -}}
+      {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (substr $s 0 4))) }}
+    {{- end -}}
+  {{- else if not .Date.IsZero -}}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (.Date | time.Format "2006"))) }}
+  {{- end -}}
 {{- end }}
 
 {{- if (.Param "ShowReadingTime") -}}

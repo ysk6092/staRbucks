@@ -1,0 +1,11 @@
+{{/* site title：首頁顯示文字，其他頁面顯示圖片 */}}
+
+{{ if .IsHome }}
+  <span class="site-title-text">
+    {{ site.Title }}
+  </span>
+{{ else }}
+  <a href="{{ site.BaseURL | relURL }}" class="site-title-image">
+    <img src="/images/site-title.png" alt="{{ site.Title }}">
+  </a>
+{{ end }}

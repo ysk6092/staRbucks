@@ -1,0 +1,12 @@
+{{- /* post_meta.html (custom) */ -}}
+
+{{- if .Params.year -}}
+  <span class="post-year">{{ .Params.year }}</span>
+{{- else -}}
+  {{- if not .Date.IsZero -}}
+    {{- $y := .Date.Year -}}
+    {{- if gt $y 1970 -}}
+      <span class="post-year">{{ $y }}</span>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="{{ "css/force.css" | relURL }}">
+<link rel="stylesheet" href="/my-artist-site/css/custom.css">
+<link rel="stylesheet" href="/css/custom.css">
+<style>
+.work-ring-wrap{
+  position: relative;
+  width: 100%;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  margin: 1rem 0 2rem 0;
+}
+
+.work-ring{
+  position: relative;
+  width: min(900px, 92vw);
+  height: min(520px, 60vh);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.work-ring-item{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  z-index: 1;
+}
+
+.work-ring-item img{
+  display: block;
+  width: 260px;
+  height: auto;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  transition: transform .18s ease, filter .18s ease;
+  will-change: transform;
+  user-select: none;
+}
+
+.work-ring-item:hover{
+  z-index: 999;
+}
+.work-ring-item:hover img{
+  transform: scale(1.08);
+  filter: brightness(1.05);
+}
+
+@media (max-width: 680px){
+  .work-ring{
+    width: 92vw;
+    height: 62vh;
+  }
+  .work-ring-item img{
+    width: 200px;
+    max-height: 280px;
+  }
+}
+</style>

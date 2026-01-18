@@ -1,0 +1,18 @@
+<div style="position:fixed;top:0;left:0;z-index:999999;background:yellow;color:black;font-size:12px;padding:4px;">
+  3177314735233513
+</div>
+{{ if not .IsHome }}
+<header class="header">
+  <nav class="nav">
+    {{ partial "site-title.html" . }}
+
+    <ul class="menu">
+      {{ range site.Menus.main }}
+        <li>
+          <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  </nav>
+</header>
+{{ end }}

@@ -1,0 +1,412 @@
+/* ===== 強制 works 列表：左圖右文 ===== */
+
+/* works 列表每一列 */
+body.list .works-list-entry{
+  display: flex !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+}
+
+/* 左側縮圖容器：固定寬度、等高 */
+body.list .works-list-thumb{
+  flex: 0 0 84px !important;   /* ✅ 變小：改這個數字 */
+  width: 84px !important;
+  height: auto !important;
+  overflow: hidden !important;
+  border-radius: 2px !important;
+  background: rgba(255,255,255,0.06) !important;
+  display: block !important;
+}
+
+/* 讓左側縮圖跟右側文字等高 */
+body.list .works-list-entry > .works-list-thumb{
+  align-self: stretch !important;
+}
+
+/* 圖片填滿 */
+body.list .works-list-thumb img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* 右側文字 */
+body.list .works-list-text{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* 避免列太矮 */
+body.list .works-list-entry{
+  min-height: 96px !important;
+}
+/* ===== site title image (non-home) ===== */
+
+.site-title-image{
+  display: inline-block;
+}
+
+.site-title-image img{
+  height: 28px;              /* 可自行調整大小 */
+  width: auto;
+  transition: filter 0.15s ease;
+  display: block;
+}
+
+/* 滑鼠移過去 → 顏色反轉 */
+.site-title-image:hover img{
+  filter: invert(1);
+}
+/* 非首頁：標題圖片 hover 反相 */
+.site-title-image img{
+  height: 128px;
+  width: auto;
+  display: block;
+  transition: filter 0.15s ease;
+}
+
+.site-title-image:hover img{
+  filter: invert(1);
+}
+/* ===== works-img：隨機散落 / 可重疊 / 漂浮 / hover 放大 ===== */
+
+.works-img-board{
+  position: relative;
+  width: 100%;
+  min-height: 78vh;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.works-img-item{
+  position: absolute;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: rgba(0,0,0,0); /* 透明框 */
+  transform-origin: center center;
+  will-change: transform;
+  text-decoration: none;
+  transition: transform 170ms ease, filter 170ms ease, box-shadow 170ms ease;
+}
+
+/* 直圖也塞進 16:9 透明框 */
+.works-img-item img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: filter 170ms ease;
+}
+
+/* 漂浮：只做小位移 + 極小旋轉，不動 left/top */
+@keyframes floaty2 {
+  0%   { transform: translate3d(0,0,0) rotate(var(--r)) scale(var(--baseScale,1)); }
+  50%  { transform: translate3d(var(--floatAmp,8px), calc(var(--floatAmp,8px) * -0.7), 0)
+                rotate(calc(var(--r) + 0.6deg)) scale(var(--baseScale,1)); }
+  100% { transform: translate3d(0,0,0) rotate(var(--r)) scale(var(--baseScale,1)); }
+}
+
+.works-img-item{
+  animation: floaty2 var(--floatDur, 12s) ease-in-out infinite;
+}
+
+/* hover：暫停漂浮、變亮、陰影、放大（在 baseScale 基礎上） */
+.works-img-item:hover{
+  animation-play-state: paused;
+  filter: brightness(1.12) contrast(1.06) saturate(1.06);
+  box-shadow: 0 14px 28px rgba(0,0,0,.22);
+  transform: translate3d(0,0,0) rotate(var(--r)) scale(calc(var(--baseScale,1) * 1.08));
+  z-index: 9999 !important;
+}
+
+.works-img-item:hover img{
+  filter: saturate(1.08);
+}
+
+.works-img-fallback{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  color: #666;
+}
+/* ===== works 清單（左側小方塊縮圖） ===== */
+.works-list{ margin-top: 12px; }
+
+.work-row{ margin: 0 0 10px 0; }
+.work-row-link{
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+  text-decoration:none;
+}
+
+.work-row-thumb{
+  width:64px;
+  flex:0 0 64px;
+  background:transparent;
+}
+
+.work-row-thumb img{
+  width:64px;
+  height:64px;
+  display:block;
+  object-fit:cover;
+}
+
+.work-row-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:64px;
+}
+
+.work-row-title{ font-size:12px; line-height:1.2; }
+.work-row-year{ font-size:12px; opacity:.7; margin-top:4px; }
+/* ================================
+   導覽列 hover / active 變紅
+   （只影響非首頁）
+================================ */
+
+/* 一般狀態 */
+header.header .menu a {
+  color: #FFFFFF;
+  transition: color 0.15s ease;
+}
+
+/* 滑鼠經過 */
+header.header .menu a:hover {
+  color: #c40000; /* 紅色，可自行改 */
+}
+
+/* 目前頁面（active） */
+header.header .menu a[aria-current="page"],
+header.header .menu a.active {
+  color: #c40000;
+}
+
+/* 點擊瞬間（滑鼠按下） */
+header.header .menu a:active {
+  color: #c40000;
+}
+/* ================================
+   TOP 按鈕（圖片 + hover 反相）
+================================ */
+
+#back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 48px;        /* 按鈕大小，可調 */
+  height: 48px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 9999;
+}
+
+#back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#back-to-top img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+/* hover：顏色反相 + 微放大 */
+#back-to-top:hover img {
+  filter: invert(1);
+  transform: scale(1.08);
+}
+#back-to-top{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  z-index: 99999;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .2s ease;
+}
+
+#back-to-top.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#back-to-top img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: filter .18s ease, transform .18s ease;
+}
+
+#back-to-top:hover img{
+  filter: invert(1);
+  transform: scale(1.06);
+}
+/* ===== TOP button (image) ===== */
+#back-to-top{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 64px;
+  height: 64px;
+  z-index: 99999;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+#back-to-top.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#back-to-top img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: filter .18s ease, transform .18s ease;
+}
+
+#back-to-top:hover img{
+  filter: invert(1);
+  transform: scale(1.06);
+}
+/* ===== Work ring: 強制水平旋轉、避免被主題 transform 汙染 ===== */
+.work-ring{
+  position: relative;
+  width: 100%;
+  height: 460px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  transform: none !important;   /* 砍掉任何外層 rotateX/rotateY */
+}
+
+.work-ring-item{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.work-ring-item img{
+  display: block;
+  width: 420px;           /* 你覺得太大/太小就調這個 */
+  max-width: 56vw;
+  height: auto;
+  transform: none !important;
+}
+
+/* 文字與圖不重疊 */
+.post-content{ position: relative; z-index: 1; }
+.work-images-below{ margin-top: 26px; }
+.work-img-row img{ max-width: 100%; height: auto; display:block; }
+/* =========================
+   Work ring (works single)
+   ========================= */
+
+.work-ring-wrap{
+  margin: 10px 0 18px;
+  position: relative;
+}
+
+.work-ring{
+  position: relative;
+  width: 100%;
+  height: min(520px, 64vh);
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  overflow: visible;
+  transform: none !important; /* 防止被外層 rotateX 汙染 */
+}
+
+/* item 是可點擊的（開新視窗看原圖） */
+.work-ring-item{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  text-decoration: none;
+}
+
+/* 16:9 透明框：直圖也會被置中塞進去 */
+.work-ring-frame{
+  display: block;
+  width: min(520px, 62vw);   /* 圖更大：調這裡 */
+  aspect-ratio: 16 / 9;
+  background: rgba(0,0,0,0); /* 透明框 */
+  overflow: hidden;
+}
+
+.work-ring-frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* hover：稍微放大、變亮、有陰影 */
+.work-ring-item:hover{
+  filter: brightness(1.08) contrast(1.03) saturate(1.05);
+  z-index: 99999 !important;
+}
+.work-ring-item:hover .work-ring-frame{
+  transform: scale(1.06);
+  box-shadow: 0 16px 34px rgba(0,0,0,.22);
+}
+
+/* 文字永遠在圓環下面，不重疊 */
+.post-content{
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+}
+
+/* 下方圖（保留那份） */
+.work-images-below{
+  margin-top: 22px;
+}
+.work-img-row img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+/* ===== 首頁 → works 按鈕（複製回首頁按鈕的樣式） ===== */
+.site-works-btn{
+  position: fixed;
+  right: 24px;
+  bottom: 96px; /* 比回首頁那顆高一點 */
+  z-index: 999;
+  display: block;
+}
+
+.site-works-btn img{
+  width: 48px;          /* 跟回首頁一致 */
+  height: auto;
+  display: block;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+/* hover：反色 + 微放大 */
+.site-works-btn:hover img{
+  filter: invert(1);
+  transform: scale(1.05);
+}

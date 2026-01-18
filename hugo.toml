@@ -1,20 +1,28 @@
-baseURL = "https://ysk6092.github.io/my-artist-site/"
-
+baseURL = "/"
 languageCode = "zh-tw"
-title = "Chang,Jui-Che / 張瑞哲"
+title = "Chang,Jui-Che"
 theme = "papermod"
 
 [pagination]
   pagerSize = 20
 
 [params]
+
+  hidden = true
+  hiddenInSingle = true
+  hiddenInList = true
+ # 關掉 PaperMod 單頁自動 cover / featured image 顯示
+  cover.hidden = true
+  cover.hiddenInSingle = true
+  cover.hiddenInList = true
   env = "production"
-  title = "Chang,Jui-Che / 張瑞哲"
+  title = "Chang,Jui-Che"
   description = "Artist Portfolio"
   keywords = ["art", "portfolio", "installation", "contemporary art"]
+ customCSS = ["css/custom.css"]
 
   disableThemeToggle = false
-  defaultTheme = "auto"
+  defaultTheme = "dark"
   ShowReadingTime = false
   ShowWordCount = false
   ShowPostNavLinks = true
@@ -22,8 +30,15 @@ theme = "papermod"
   ShowCodeCopyButtons = true
   disableScrollToTop = false
   hideFooter = false
+ HomeTitle = "Chang,Jui-Che"
 
   disableLanguageSwitchingButton = true
 
   [params.assets]
     customCSS = ["css/custom.css"]
+
+canonifyURLs = false
+relativeURLs = true
+
+
+

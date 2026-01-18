@@ -1,0 +1,308 @@
+<div style="position:fixed;bottom:0;left:0;z-index:999999;background:lime;color:black;font-size:12px;padding:4px;">Would that my heart be a moonlit glow, guiding the wanderers through the dark alone.</div>
+<script>
+(function () {
+  function initWorkRing(ring) {
+    const items = Array.from(ring.querySelectorAll(".work-ring-item"));
+    if (!items.length) return;
+
+    // 每次進來都重新洗牌，達到「每次不一樣」
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      ring.insertBefore(items[j], items[i]);
+    }
+
+    const radius = Math.min(ring.clientWidth, ring.clientHeight) * 0.36;
+    const jitter = 18;
+
+    // 依圓周擺放 + 深度（zIndex/opacity/scale）
+    items.forEach((el, idx) => {
+      const a = (idx / items.length) * Math.PI * 2;
+
+      const x = Math.cos(a) * radius + (Math.random()*jitter - jitter/2);
+      const y = Math.sin(a) * (radius * 0.50) + (Math.random()*jitter - jitter/2);
+
+      const depth = (Math.sin(a) + 1) / 2; // 0..1
+      const scale = 0.78 + depth * 0.45;   // 0.78..1.23
+      const z = Math.round(depth * 1000);
+
+      el.style.transform =
+        `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0px) rotate(${(Math.random()*10-5)}deg) scale(${scale})`;
+      el.style.zIndex = String(z);
+      el.style.opacity = String(0.60 + depth * 0.40);
+    });
+
+    // 自動慢轉：轉整個 ring
+    let angle = Math.random() * 360;
+    const speed = 0.035 + Math.random() * 0.02;
+    let paused = false;
+
+    ring.addEventListener("mouseenter", () => paused = true);
+    ring.addEventListener("mouseleave", () => paused = false);
+
+    function tick() {
+      if (!paused) angle += speed;
+      ring.style.transform = `rotate(${angle}deg)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  function boot() {
+    document.querySelectorAll(".work-ring[data-autospin='1']").forEach(initWorkRing);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<!-- TOP_BUTTON_FROM_EXTEND_FOOTER_123 -->
+<div id="back-to-top" title="Top" aria-label="Back to top">
+  <img src="{{ "images/top.png" | relURL }}" alt="TOP">
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById("back-to-top");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  function toggle() {
+    if (window.scrollY > 200) btn.classList.add("show");
+    else btn.classList.remove("show");
+  }
+  window.addEventListener("scroll", toggle);
+  toggle();
+})();
+</script>
+<div style="position:fixed;bottom:0;left:0;z-index:999999;background:lime;color:black;font-size:12px;padding:4px;">
+  EXTEND_FOOTER_IS_LOADED_123
+</div>
+
+<div id="back-to-top" title="Top" aria-label="Back to top">
+  <img src="{{ "images/top.png" | relURL }}" alt="TOP">
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById("back-to-top");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  function toggle() {
+    if (window.scrollY > 200) btn.classList.add("show");
+    else btn.classList.remove("show");
+  }
+  window.addEventListener("scroll", toggle);
+  toggle();
+})();
+</script>
+<script>
+(function () {
+  function initWorkRing(ring) {
+    const items = Array.from(ring.querySelectorAll(".work-ring-item"));
+    if (!items.length) return;
+
+    // ===== 舞台參數（可調）=====
+    const W = ring.clientWidth;
+
+    // 水平半徑：越大越不重疊
+    const radiusX = Math.min(620, Math.max(420, W * 0.46));
+    // 前後深度：越大越有「後方淡出」
+    const depthZ  = 560;
+    // 上下起伏：保持很小，避免變成垂直甜甜圈
+    const bobY    = 14;
+
+    // 旋轉速度：越小越慢
+    let t = Math.random() * Math.PI * 2;
+    const speed = 0.00038;
+
+    // focus：點圖後讓那張到最前方
+    let focus = 0;
+
+    // hover 暫停自轉
+    let paused = false;
+    ring.addEventListener("mouseenter", () => paused = true);
+    ring.addEventListener("mouseleave", () => paused = false);
+
+    // 點擊任一張 → focus（不開新視窗、不跳轉）
+    items.forEach((el, idx) => {
+      el.style.cursor = "pointer";
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        focus = idx;
+      });
+    });
+
+    // 左右鍵切換 focus（可有可無）
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") focus = (focus + 1) % items.length;
+      if (e.key === "ArrowLeft")  focus = (focus - 1 + items.length) % items.length;
+    });
+
+    function render() {
+      if (!paused) t += speed;
+
+      // 讓 focus 那張「對準正前方」
+      const focusAngle = (focus / items.length) * Math.PI * 2;
+      const offset = -focusAngle;
+
+      items.forEach((el, idx) => {
+        const a = (idx / items.length) * Math.PI * 2 + t + offset;
+
+        // ✅ 水平環：x = cos, z = sin
+        const x = Math.cos(a) * radiusX;
+        const z = Math.sin(a) * depthZ;
+
+        // y 只做小起伏（不要讓環垂直翻轉）
+        const y = Math.sin(a * 2) * bobY;
+
+        // 深度 0..1（後->前）
+        const depth01 = (z + depthZ) / (2 * depthZ);
+
+        // ===== 後方逐漸隱沒 =====
+        // 後面幾乎消失、前面接近 1
+        const opacity = 0.06 + depth01 * 0.94;
+
+        // 後面縮小、前面放大
+        const scale = 0.56 + depth01 * 0.72;
+
+        // ===== 減少前方重疊 =====
+        // 只有「非常前面」的才額外左右分離
+        const frontBoost = Math.max(0, (depth01 - 0.70) / 0.30); // 0..1
+        const spread = (idx % 2 === 0 ? 1 : -1) * frontBoost * 22;
+
+        el.style.opacity = opacity.toFixed(3);
+        el.style.zIndex = String(Math.round(depth01 * 1000));
+
+        el.style.transform =
+          `translate3d(calc(-50% + ${x + spread}px), calc(-50% + ${y}px), ${z}px) scale(${scale.toFixed(3)})`;
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  function boot() {
+    document.querySelectorAll(".work-ring[data-autospin='1']").forEach(initWorkRing);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<script>
+(function () {
+  function initWorkRing(ring){
+    const items = Array.from(ring.querySelectorAll(".work-ring-item"));
+    if (!items.length) return;
+
+    // 參數（你要更寬/更慢/更不重疊就調這裡）
+    let t = 0;
+    const speed = 0.00055;          // 慢轉（越小越慢）
+    let paused = false;
+
+    // 半徑：越大越不擠；depth 越大景深越強
+    function compute(){
+      const w = ring.clientWidth || 1200;
+      const h = ring.clientHeight || 520;
+      const radiusX = Math.min(w, 1200) * 0.42;  // 圓環「寬」
+      const depthZ  = Math.min(w, 1200) * 0.55;  // 前後景深
+      const yWiggle = Math.min(h, 520) * 0.06;   // 垂直起伏很小（避免甜甜圈）
+      return { radiusX, depthZ, yWiggle };
+    }
+
+    ring.addEventListener("mouseenter", ()=> paused = true);
+    ring.addEventListener("mouseleave", ()=> paused = false);
+
+    // 點一下：把那張推到最前（不換頁；因為你的連結是開新視窗看原圖）
+    let focus = 0;
+    items.forEach((el, idx)=>{
+      el.addEventListener("click", (e)=>{
+        // 讓它仍可開新視窗看原圖；如果你想「點擊切換 focus 不開圖」，就把下一行改成 e.preventDefault();
+        // e.preventDefault();
+        focus = idx;
+      });
+    });
+
+    // 每張給一個隨機初始相位
+    const phases = items.map(()=> Math.random() * Math.PI * 2);
+
+    function render(){
+      if (!paused) t += speed;
+
+      const { radiusX, depthZ, yWiggle } = compute();
+
+      // 讓 focus 在最前：反向偏移整圈
+      const focusAngle = (focus / items.length) * Math.PI * 2 + phases[focus];
+      const offset = -focusAngle;
+
+      items.forEach((el, idx)=>{
+        const a = (idx / items.length) * Math.PI * 2 + phases[idx] + t + offset;
+
+        // 水平環：x 主要變化，y 只有小起伏，z 代表前後（景深）
+        const x = Math.cos(a) * radiusX;
+        const y = Math.sin(a) * yWiggle;
+        const z = Math.sin(a) * depthZ;
+
+        // 深度 0..1
+        const depth01 = (z + depthZ) / (2 * depthZ);
+
+        // 前方 3 張：尺度更大、更清楚；後方逐漸淡出
+        // 透明度：後方更淡，最後幾張幾乎消失
+        const opacity = Math.max(0, Math.min(1, 0.06 + Math.pow(depth01, 1.65) * 0.94));
+        // 尺度：前方比較大，後方縮小（避免前後都擠在一起）
+        const scale = 0.62 + Math.pow(depth01, 1.35) * 0.62; // 0.62..1.24
+
+        // 前方「不要太重疊」：把最前景的 x 稍微推開（非線性）
+        const spread = 1 + (depth01 > 0.72 ? (depth01 - 0.72) * 1.6 : 0); // 前方三張更分散
+        const x2 = x * spread;
+
+        el.style.opacity = opacity.toFixed(3);
+        el.style.zIndex = String(Math.round(depth01 * 1000));
+
+        // 水平旋轉：不做 rotateX
+        el.style.transform =
+          `translate3d(calc(-50% + ${x2.toFixed(1)}px), calc(-50% + ${y.toFixed(1)}px), ${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  function boot(){
+    document.querySelectorAll(".work-ring[data-autospin='1']").forEach(initWorkRing);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<a class="site-home-btn" href="/">
+  <img src="/images/top.png" alt="Home">
+</a>
+
+<!-- === 只在首頁顯示：前往 works === -->
+{{ if .IsHome }}
+<a class="site-works-btn" href="/works/">
+  <img src="/images/top.png" alt="Go to works">
+</a>
+{{ end }}

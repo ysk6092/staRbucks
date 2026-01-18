@@ -1,0 +1,76 @@
+{{ define "main" }}
+<main class="post">
+
+  {{ $pages := where site.RegularPages "Section" "works" }}
+
+  <div class="works-img-board" id="worksImgBoard">
+    {{ range $pages }}
+      {{ $thumb := (.Param "thumb") }}
+      <a class="works-img-item" href="{{ .RelPermalink }}" aria-label="{{ .Title | plainify }}">
+        <div class="works-img-inner">
+          {{ if $thumb }}
+            <img src="{{ $thumb | relURL }}" alt="{{ .Title | plainify }}" loading="lazy">
+          {{ else }}
+            <span class="works-img-fallback">no thumb</span>
+          {{ end }}
+        </div>
+      </a>
+    {{ end }}
+  </div>
+
+  <script>
+  (function () {
+    const board = document.getElementById("worksImgBoard");
+    if (!board) return;
+
+    const items = Array.from(board.querySelectorAll(".works-img-item"));
+    if (!items.length) return;
+
+    function layout() {
+      const w = board.clientWidth;
+      const h = Math.max(window.innerHeight * 0.78, 520);
+      board.style.height = h + "px";
+
+      items.forEach((el) => {
+        // 隨機大小
+        const size = 150 + Math.random() * 260; // 150~410
+        el.style.width = size + "px";
+
+        // 隨機位置：用 left/top 定位（不會被 transform 動畫覆蓋）
+        const x = (Math.random() * (w - size));
+        const y = (Math.random() * (h - (size * 9/16)));
+        el.style.left = Math.max(0, x) + "px";
+        el.style.top  = Math.max(0, y) + "px";
+
+        // 小角度旋轉
+        const r = (Math.random() * 10) - 5;
+        el.style.setProperty("--r", r.toFixed(2) + "deg");
+
+        // 深度/層級（允許重疊）
+        const z = Math.floor(Math.random() * 500) + 1;
+        el.style.zIndex = String(z);
+
+        // 深度→透明度（後面更淡）
+        const depth01 = z / 500;
+        el.style.opacity = (0.22 + depth01 * 0.78).toFixed(3);
+
+        // 後面的圖稍小（景深感）
+        el.style.setProperty("--baseScale", (0.90 + depth01 * 0.18).toFixed(3));
+
+        // 漂浮參數
+        el.style.setProperty("--floatDur", (8 + Math.random() * 10).toFixed(2) + "s");
+        el.style.setProperty("--floatAmp", (3 + Math.random() * 9).toFixed(1) + "px");
+      });
+    }
+
+    layout();
+
+    window.addEventListener("resize", () => {
+      clearTimeout(window.__worksImgResizeTimer);
+      window.__worksImgResizeTimer = setTimeout(layout, 150);
+    });
+  })();
+  </script>
+
+</main>
+{{ end }}

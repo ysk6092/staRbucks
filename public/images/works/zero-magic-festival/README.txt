@@ -1,1 +1,0 @@
-Put images for zero-magic-festival here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/zero-magic-festival/01.jpg in Markdown.

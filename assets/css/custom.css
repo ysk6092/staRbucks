@@ -1,65 +1,209 @@
-
-/* 全站預設字體：細明體 + 12px */
-html, body {
-  font-size: 12px;
-  font-family: "PMingLiU", "MingLiU", "SimSun", "Times New Roman", serif;
-  line-height: 1.6;
+/* =========================
+   Global link hover (non-home)
+   ========================= */
+body:not(.home) a:hover,
+body:not(.home) a:active,
+body:not(.home) a:focus{
+  color: #c00 !important;
 }
 
-/* 所有標題維持小字，避免巨大 */
-h1, h2, h3, h4, h5, h6 {
-  font-size: 12px;
-  font-weight: normal;
+/* =========================
+   Works-img random collage board
+   ========================= */
+.works-img-board{
+  position: relative;
+  width: 100%;
+  min-height: 78vh;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-/* 頂部主選單稍微大一點點 */
-.header .menu a {
-  font-size: 14px;
-}
-
-/* 首頁隱藏右上角主選單：body.class=list */
-body.list .header .menu {
-  display: none !important;
-}
-
-/* 首頁 hero menu 字體稍微大、白色 */
-.fullscreen-menu {
-  font-size: 16px;
-}
-
-.fullscreen-menu a {
-  font-size: 1em;
-  color: #ffffff;
+.works-img-item{
+  position: absolute;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: rgba(0,0,0,0); /* 透明框 */
+  transform-origin: center center;
+  will-change: transform;
   text-decoration: none;
-  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+  transition: transform 170ms ease, filter 170ms ease, box-shadow 170ms ease;
 }
 
-/* 作品頁圖片最大寬度 100% */
-.post-content img {
+.works-img-item img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain; /* 直圖放進 16:9 透明框 */
+  transition: filter 170ms ease;
+}
+
+/* 漂浮（只小幅位移） */
+@keyframes floaty2 {
+  0%   { transform: translate3d(var(--x,0), var(--y,0), 0) rotate(var(--r,0deg)) scale(var(--baseScale,1)); }
+  50%  { transform: translate3d(calc(var(--x,0) + var(--floatAmp,8px)),
+                                calc(var(--y,0) - var(--floatAmp,8px) * 0.7), 0)
+                        rotate(calc(var(--r,0deg) + 0.6deg))
+                        scale(var(--baseScale,1)); }
+  100% { transform: translate3d(var(--x,0), var(--y,0), 0) rotate(var(--r,0deg)) scale(var(--baseScale,1)); }
+}
+.works-img-item{
+  animation: floaty2 var(--floatDur, 12s) ease-in-out infinite;
+}
+
+/* hover：暫停漂浮、放大、陰影、變亮 */
+.works-img-item:hover{
+  animation-play-state: paused;
+  filter: brightness(1.12) contrast(1.06) saturate(1.06);
+  box-shadow: 0 14px 28px rgba(0,0,0,.22);
+  transform: translate3d(var(--x,0), var(--y,0), 0) rotate(var(--r,0deg))
+             scale(calc(var(--baseScale,1) * 1.08));
+  z-index: 9999 !important;
+}
+.works-img-item:hover img{
+  filter: saturate(1.08);
+}
+
+.works-img-fallback{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  color: #666;
+}
+
+/* =========================
+   Works list thumb (left square)
+   ========================= */
+.works-list-entry{
+  display:flex;
+  gap:14px;
+  align-items: stretch;
+  padding:14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  min-height: 96px;
+}
+
+.works-list-thumb{
+  flex: 0 0 90px;
+  width: 90px;
+  height: auto;
+  overflow:hidden;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.04);
+  display:block;
+}
+
+.works-list-thumb img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+.works-list-text{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* =========================
+   Work single: ring on top, text below, images below text
+   ========================= */
+
+/* 內文圖片全部隱藏（避免「文字上方冒出第二份圖」） */
+.work-single .work-text img,
+.work-single .work-text figure{
+  display:none !important;
+}
+
+/* ring 區域：固定高度，避免和文字重疊 */
+.work-ring-wrap{
+  position: relative;
+  width: 100%;
+  height: min(72vh, 620px);
+  margin: 1.2rem 0 1.4rem 0;
+  overflow: hidden;
+}
+
+.work-ring{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  perspective: 1100px;
+}
+
+.work-ring-item{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+/* 16:9 透明框 */
+.work-ring-item .frame169{
+  width: 420px;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0);
+}
+
+/* 圖片放入框內，不裁切 */
+.work-ring-item img{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+}
+
+/* hover 微放大 */
+.work-ring-item:hover img{
+  transform: scale(1.06);
+  filter: brightness(1.05);
+}
+
+/* 文字區，保證在 ring 下方 */
+.work-single .work-text{
+  position: relative;
+  z-index: 0;
+  margin-top: 6px;
+}
+
+/* 文字下方的圖片列表 */
+.work-images-below{
+  margin: 1.6rem 0 1rem 0;
+}
+.work-images-below .work-image{
+  margin: 0 0 1rem 0;
+}
+.work-images-below img{
   max-width: 100%;
   height: auto;
-}
-
-/* TOP 按鈕 */
-#back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: rgba(255,255,255,0.8);
-  color: #000;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 10px;
-  cursor: pointer;
-  border: 1px solid #aaa;
-  z-index: 999;
-  display: none;
-}
-
-#back-to-top.show {
   display: block;
 }
 
-#back-to-top:hover {
-  background: #ffffff;
+/* 手機縮小 ring */
+@media (max-width: 680px){
+  .work-ring-item .frame169{ width: 280px; }
+}
+/* 只在作品內頁：把「內文」中的圖片全部隱藏，避免又冒出一份在文字上方 */
+.work-single .post-content img,
+.work-single .post-content figure,
+.work-single .post-content .wp-block-image{
+  display: none !important;
+}
+
+/* 但文字下方那組圖一定要顯示 */
+.work-single .work-images-below img{
+  display: block !important;
+}
+/* ===== works 單一作品頁：隱藏 md 內文裡的圖片（避免跑到文字上方） ===== */
+.work-single .post-content img,
+.work-single .post-content figure {
+  display: none !important;
 }

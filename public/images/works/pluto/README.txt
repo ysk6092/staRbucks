@@ -1,1 +1,0 @@
-Put images for pluto here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/pluto/01.jpg in Markdown.

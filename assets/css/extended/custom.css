@@ -21,7 +21,19 @@ h1,h2,h3,h4,h5,h6 {
   display: none !important;
 }
 
-/* 首頁隱藏 PaperMod 的主選單 */
-.home .header-nav {
+.home .header,
+.home .nav,
+.home nav,
+.home .menu,
+.home .menu-inner,
+.home .menu__inner {
   display: none !important;
 }
+
+.home-bg{
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+html { outline: 5px solid red !important; }

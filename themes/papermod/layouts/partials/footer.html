@@ -1,3 +1,4 @@
+<!-- FOOTER_THEME_TEST_123 -->
 {{- if not (.Param "hideFooter") }}
 <footer class="footer">
     {{- if not site.Params.footer.hideCopyright }}
@@ -20,6 +21,29 @@
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
+<!-- Back to Top Button -->
+<div id="back-to-top" aria-label="Back to top" title="Top">
+  <img src="{{ "images/top.png" | relURL }}" alt="TOP">
+</div>
+
+<script>
+(function () {
+  const btn = document.getElementById("back-to-top");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  function toggle() {
+    if (window.scrollY > 200) btn.classList.add("show");
+    else btn.classList.remove("show");
+  }
+
+  window.addEventListener("scroll", toggle);
+  toggle();
+})();
+</script>
 {{- end }}
 
 {{- if (not site.Params.disableScrollToTop) }}

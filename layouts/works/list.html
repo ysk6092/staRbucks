@@ -3,53 +3,32 @@
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>{{ .Title }}</h1>
-  {{- if .Description }}
-  <div class="post-description">
-    {{ .Description | markdownify }}
-  </div>
-  {{- end }}
 </header>
 
-{{- if .Content }}
-<div class="post-content">
-  {{- if not (.Param "disableAnchoredHeadings") }}
-  {{- partial "anchored_headings.html" .Content -}}
-  {{- else }}{{ .Content }}{{ end }}
-</div>
-{{- end }}
-
-{{/* 專門給 /works 用：只列出這個 section 底下的頁面，依 year 由新到舊排序 */}}
+{{/* works 清單：依 year 由新到舊 */}}
 {{- $pages := sort .Pages "Params.year" "desc" }}
 
-{{- range $index, $page := $pages }}
-  <article class="post-entry">
-    {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false }}
-    {{- partial "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) }}
-    <header class="entry-header">
-      <h2 class="entry-hint-parent">
-        {{- $page.Title }}
-        {{- if $page.Draft }}
-        <span class="entry-hint" title="Draft">
-          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
-            <path
-              d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-          </svg>
-        </span>
-        {{- end }}
-      </h2>
-    </header>
-    {{- if ne ($page.Param "hideSummary") true }}
-    <div class="entry-content">
-      <p>{{ $page.Summary | plainify | htmlUnescape }}{{ if $page.Truncated }}...{{ end }}</p>
-    </div>
-    {{- end }}
-    {{- if not ($page.Param "hideMeta") }}
-    <footer class="entry-footer">
-      {{- partial "post_meta.html" $page -}}
-    </footer>
-    {{- end }}
-    <a class="entry-link" aria-label="post link to {{ $page.Title | plainify }}" href="{{ $page.Permalink }}"></a>
+<div class="works-list">
+{{- range $pages }}
+  <article class="work-row">
+    {{ $thumb := .Param "list_thumb" | default (.Param "thumb") }}
+
+    <a class="work-row-link" href="{{ .RelPermalink }}">
+      <div class="work-row-thumb">
+        {{ if $thumb }}
+          <img src="{{ $thumb | relURL }}" alt="{{ .Title | plainify }}" loading="lazy">
+        {{ end }}
+      </div>
+
+      <div class="work-row-text">
+        <div class="work-row-title">{{ .Title }}</div>
+        {{ with .Params.year }}
+          <div class="work-row-year">{{ . }}</div>
+        {{ end }}
+      </div>
+    </a>
   </article>
 {{- end }}
+</div>
 
 {{ end }}

@@ -1,1 +1,0 @@
-Put images for leisure-suit-decoy here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/leisure-suit-decoy/01.jpg in Markdown.

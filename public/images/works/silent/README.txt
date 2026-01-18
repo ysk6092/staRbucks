@@ -1,1 +1,0 @@
-Put images for silent here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/silent/01.jpg in Markdown.

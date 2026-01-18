@@ -1,1 +1,0 @@
-Put images for skin here, e.g., 01.jpg, 02.jpg. Reference them as /images/works/skin/01.jpg in Markdown.

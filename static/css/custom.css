@@ -422,3 +422,34 @@ body.home {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* ===== Nav color: follow light/dark theme, keep hover red ===== */
+
+/* PaperMod 通常會在 <body> 加 class: dark */
+body:not(.dark) .header .nav a,
+body:not(.dark) .header .logo a,
+body:not(.dark) .header .logo,
+body:not(.dark) .header a {
+  color: #000 !important;
+}
+
+body.dark .header .nav a,
+body.dark .header .logo a,
+body.dark .header .logo,
+body.dark .header a {
+  color: #fff !important;
+}
+
+/* hover / focus / active 永遠紅色 */
+.header .nav a:hover,
+.header .nav a:focus,
+.header .nav a:active,
+.header .logo a:hover,
+.header .logo a:focus,
+.header .logo a:active {
+  color: #ff0000 !important;
+}
+
+/* 如果你還有左側那排選單（可能是手機 menu 或你做的側欄），也一起套用 */
+body:not(.dark) .menu a { color: #000 !important; }
+body.dark .menu a { color: #fff !important; }
+.menu a:hover, .menu a:focus, .menu a:active { color: #ff0000 !important; }

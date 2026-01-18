@@ -13,38 +13,3 @@ pagerSize = 20
 env = "production"
 description = "Artist Portfolio"
 customCSS = ["css/custom.css"]
-
-  hidden = true
-  hiddenInSingle = true
-  hiddenInList = true
- # 關掉 PaperMod 單頁自動 cover / featured image 顯示
-  cover.hidden = true
-  cover.hiddenInSingle = true
-  cover.hiddenInList = true
-  env = "production"
-  title = "Chang,Jui-Che"
-  description = "Artist Portfolio"
-  keywords = ["art", "portfolio", "installation", "contemporary art"]
- customCSS = ["css/custom.css"]
-
-  disableThemeToggle = false
-  defaultTheme = "dark"
-  ShowReadingTime = false
-  ShowWordCount = false
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = false
-  ShowCodeCopyButtons = true
-  disableScrollToTop = false
-  hideFooter = false
- HomeTitle = "Chang,Jui-Che"
-
-  disableLanguageSwitchingButton = true
-
-  [params.assets]
-    customCSS = ["css/custom.css"]
-
-canonifyURLs = false
-relativeURLs = true
-
-
-

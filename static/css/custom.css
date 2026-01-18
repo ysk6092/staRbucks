@@ -417,3 +417,8 @@ body.home {
   background-position: center;
   background-repeat: no-repeat;
 }
+.home-bg{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

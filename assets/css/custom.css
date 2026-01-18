@@ -214,3 +214,42 @@ body.home {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* ========== Home: hide top header/title ========== */
+.home header.header,
+.home .header,
+.home .nav,
+.home .logo,
+.home .header-inner {
+  display: none !important;
+}
+/* ========== Global menu hover red (non-home) ========== */
+/* 內頁導覽列：滑過變紅 */
+body:not(.home) header.header a:hover,
+body:not(.home) header.header a:focus,
+body:not(.home) header.header a:active {
+  color: red !important;
+}
+
+/* 左側/其他選單（若你的版型有 .menu / .nav） */
+body:not(.home) .menu a:hover,
+body:not(.home) .menu a:focus,
+body:not(.home) .menu a:active,
+body:not(.home) nav a:hover,
+body:not(.home) nav a:focus,
+body:not(.home) nav a:active {
+  color: red !important;
+}
+/* ===== non-home links hover red (force) ===== */
+body:not(.home) a:hover {
+  color: red !important;
+}
+/* ===== HOME: kill PaperMod header completely ===== */
+.home header,
+.home .header,
+.home .nav,
+.home .logo,
+.home .site-title,
+.home .brand,
+.home .header-inner {
+  display: none !important;
+}

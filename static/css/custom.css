@@ -528,3 +528,99 @@ main,
 }
 
 /* 如果你的首頁本來就把 header 隱藏了，這不會影響 */
+/* ===== Nav links: auto black/white by theme + hover red (non-home pages) ===== */
+
+/* 讓內頁導覽列文字跟著主題：亮=黑、暗=白（PaperMod 本來就有變數，這裡強制吃它） */
+.header.header .nav a,
+.header.header .menu a,
+.header.header .menu__inner a{
+  color: var(--primary) !important;
+}
+
+/* hover / focus / active 都變紅 */
+.header.header .nav a:hover,
+.header.header .menu a:hover,
+.header.header .menu__inner a:hover,
+.header.header .nav a:focus,
+.header.header .menu a:focus,
+.header.header .menu__inner a:focus,
+.header.header .nav a:active,
+.header.header .menu a:active,
+.header.header .menu__inner a:active{
+  color: #ff0000 !important;
+}
+
+/* 目前所在頁（active）也保持紅（若主題有加 active class） */
+.header.header .menu a.active,
+.header.header .menu__inner a.active{
+  color: #ff0000 !important;
+}
+/* ===== non-home links hover red (force) ===== */
+body:not(.home) a:hover {
+  color: red !important;
+}
+/* ===== non-home menu hover red (force) ===== */
+body:not(.home) a:hover,
+body:not(.home) a:focus,
+body:not(.home) a:active {
+  color: red !important;
+}
+
+/* ============================
+   FIX PACK (DO NOT EDIT ABOVE)
+   - Fix broken CSS brace
+   - Hide PaperMod header text on HOME only
+   - Non-home menu hover red (force)
+============================ */
+
+/* --- HOME ONLY: hide PaperMod header/nav/title text, but don't nuke your custom home layout --- */
+body.home .header .logo,
+body.home .header .logo a,
+body.home .header .nav,
+body.home .header .menu,
+body.home .header .site-title,
+body.home .header .breadcrumbs,
+body.home .page-header{
+  display: none !important;
+}
+
+/* --- Non-home: nav/link colors follow theme variables; hover always red --- */
+body:not(.home) .header a{
+  color: var(--primary) !important;
+  transition: color 0.15s ease;
+}
+body:not(.home) .header a:hover,
+body:not(.home) .header a:focus,
+body:not(.home) .header a:active{
+  color: red !important;
+}
+
+/* PaperMod menu sometimes wraps text in spans */
+body:not(.home) .header a:hover span,
+body:not(.home) .header a:focus span,
+body:not(.home) .header a:active span{
+  color: red !important;
+}
+
+/* Safety: if your browser supports :has(), also hide header when your fullscreen home bg exists */
+@supports(selector(:has(*))){
+  body:has(.fullscreen-bg) .header,
+  body:has(.fullscreen-bg) header{
+    display: none !important;
+  }
+}
+
+/* --- IMPORTANT: close any accidentally-open block (this prevents "CSS stops working" disasters) --- */
+/* ===== Force menu hover red (non-home) ===== */
+body:not(.home) header.header a:hover,
+body:not(.home) header.header a:focus,
+body:not(.home) header.header a:active{
+  color: red !important;
+}
+
+/* 有些主題把文字包在 span 裡 */
+body:not(.home) header.header a:hover span,
+body:not(.home) header.header a:focus span,
+body:not(.home) header.header a:active span{
+  color: red !important;
+}
